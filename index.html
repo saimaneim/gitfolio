@@ -2,13 +2,546 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Github Graph</title>
-    <link rel="stylesheet" href="./src/index.css" />
-    <script type="module" src="/src/github-graph.ts"></script>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://github.githubassets.com/favicons/favicon-dark.svg"
+    />
+    <title id="page-title">saimaneim ( stteeel )</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/global.css" />
+    <script type="module" src="/src/components/github-avatar.ts"></script>
+    <script
+      type="module"
+      src="/src/components/github-popular-repos.ts"
+    ></script>
+    <script type="module" src="/src/components/github-heatmap.ts"></script>
+    <script type="module" src="/src/components/github-events.ts"></script>
+    <script type="module" src="/src/components/github-language-bar.ts"></script>
+    <script
+      type="module"
+      src="/src/components/github-profile-content.ts"
+    ></script>
   </head>
   <body>
-    <github-graph username="saimaneim" year="2026" />
+    <!-- ─── Navbar ─────────────────────────────────────────────────── -->
+    <nav>
+      <div class="nav-menu">
+        <button class="nav-btn btn-plus" type="button" aria-label="Menu">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-three-bars"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"
+            ></path>
+          </svg>
+        </button>
+        <svg class="github-logo" viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+          />
+        </svg>
+      </div>
+
+      <div class="nav-links">
+        <div class="nav-search">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            style="opacity: 0.6"
+          >
+            <title>Search Icon</title>
+            <path
+              d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"
+            />
+          </svg>
+          <input
+            type="text"
+            id="user-search"
+            placeholder="Search or jump to..."
+            autocomplete="off"
+          />
+          <span>/</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <div class="nav-divider"></div>
+
+        <button
+          type="button"
+          class="nav-btn btn-plus"
+          aria-label="Create new..."
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-plus"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"
+            ></path>
+          </svg>
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-triangle-down"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"
+            ></path>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-btn" aria-label="Issues">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-issue-opened"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+            <path
+              d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"
+            ></path>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-btn" aria-label="Pull requests">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-git-pull-request"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"
+            ></path>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-btn" aria-label="Repositories">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-repo"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"
+            ></path>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-btn" aria-label="Notifications">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-inbox"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M2.8 2.06A1.75 1.75 0 0 1 4.41 1h7.18c.7 0 1.333.417 1.61 1.06l2.74 6.395c.04.093.06.194.06.295v4.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25v-4.5c0-.101.02-.202.06-.295Zm1.61.44a.25.25 0 0 0-.23.152L1.887 8H4.75a.75.75 0 0 1 .6.3L6.625 10h2.75l1.275-1.7a.75.75 0 0 1 .6.3h2.863L11.82 2.652a.25.25 0 0 0-.23-.152Zm10.09 7h-2.875l-1.275 1.7a.75.75 0 0 1-.6.3h-3.5a.75.75 0 0 1-.6-.3L4.375 9.5H1.5v3.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Z"
+            ></path>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="nav-avatar-btn"
+          aria-label="User navigation"
+        >
+          <github-avatar
+            id="nav-avatar"
+            username="saimaneim"
+            width="32"
+            height="32"
+          ></github-avatar>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ─── Tabs ───────────────────────────────────────────────────── -->
+    <div class="profile-tabs">
+      <div class="tabs-inner">
+        <div class="tab active">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-book"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"
+            ></path>
+          </svg>
+          Overview
+        </div>
+        <div class="tab">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-repo"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"
+            ></path>
+          </svg>
+          Repositories
+          <span id="repo-count" class="count">+999</span>
+        </div>
+        <div class="tab">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-table"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25ZM6.5 6.5v8h7.75a.25.25 0 0 0 .25-.25V6.5Zm8-1.5V1.75a.25.25 0 0 0-.25-.25H6.5V5Zm-13 1.5v7.75c0 .138.112.25.25.25H5v-8ZM5 5V1.5H1.75a.25.25 0 0 0-.25.25V5Z"
+            ></path>
+          </svg>
+          Projects
+          <span id="project-count" class="count">+999</span>
+        </div>
+        <div class="tab">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-package"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"
+            ></path>
+          </svg>
+          Packages
+        </div>
+        <div class="tab">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            class="octicon octicon-star"
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="currentColor"
+            display="inline-block"
+            overflow="visible"
+            style="vertical-align: text-bottom"
+          >
+            <path
+              d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"
+            ></path>
+          </svg>
+          Stars
+          <span id="star-count" class="count">+999</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Main Layout ────────────────────────────────────────────── -->
+    <div class="layout">
+      <!-- ─── Sidebar ────────────────────────────────────────────── -->
+      <aside class="sidebar">
+        <div>
+          <github-avatar
+            id="sidebar-avatar"
+            username="saimaneim"
+            width="296"
+            height="296"
+          />
+        </div>
+
+        <div id="display-name" class="display-name">stteeel</div>
+        <div id="username" class="username">saimaneim</div>
+
+        <a href="#" class="btn btn-primary btn-block">Follow</a>
+        <div id="bio" class="bio">
+          Frontend developer / Fullstack developer Enthusiast of open source
+        </div>
+
+        <hr class="sidebar-divider" />
+
+        <div class="followers-row">
+          <a href="#"><strong id="followers">+999</strong> followers</a>
+          <a href="#"><strong id="following">-1</strong> following</a>
+        </div>
+
+        <div class="meta-row">
+          <svg viewBox="0 0 16 16">
+            <title>Location Icon</title>
+            <path
+              d="m12.596 11.596-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193 6.5 6.5 0 0 1 0 9.193m-1.06-8.132a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072M8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9"
+            />
+          </svg>
+          <span id="location">Venezuela / Aragua</span>
+        </div>
+
+        <div class="meta-row">
+          <svg viewBox="0 0 16 16">
+            <title>Website Icon</title>
+            <path
+              d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
+            />
+          </svg>
+          <a id="github-link" href="https://github.com/saimaneim"
+            >github.com/saimaneim</a
+          >
+        </div>
+
+        <div class="meta-row">
+          <svg viewBox="0 0 16 16">
+            <title>Email Icon</title>
+            <path
+              d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"
+            />
+          </svg>
+          <a
+            id="email-link"
+            target="_blank"
+            href="mailto:aceroabrahan@proton.me"
+            >Available for remote</a
+          >
+        </div>
+
+        <hr class="sidebar-divider" />
+
+        <div class="achievements-title">Achievements</div>
+        <div id="achievements" class="achievements-grid">
+          No achievement is insignificant, only constant progress.
+        </div>
+      </aside>
+
+      <!-- ─── Main Content ────────────────────────────────────────── -->
+      <github-profile-content id="profile-content" username="saimaneim">
+      </github-profile-content>
+    </div>
+    <script type="module">
+      const searchInput = document.getElementById("user-search");
+
+      const saimaneimData = {
+        name: "stteeel",
+        login: "saimaneim",
+        bio: "Frontend developer / Fullstack developer Enthusiast of open source",
+        location: "Venezuela / Aragua",
+        blog: "https://github.com/saimaneim",
+        email: "aceroabrahan@proton.me",
+        followers: 999,
+        following: -1,
+        achievements:
+          "No achievement is insignificant, only constant progress.",
+      };
+
+      async function updateUI(username) {
+        if (!username) return;
+
+        let data;
+        let starCount = 0;
+        let projectCount = 0;
+
+        if (username.toLowerCase() === "saimaneim") {
+          data = saimaneimData;
+          starCount = 999;
+          projectCount = 999;
+        } else {
+          try {
+            const userRes = await fetch(
+              `https://api.github.com/users/${username}`,
+            );
+            if (!userRes.ok) return;
+            data = await userRes.json();
+
+            const starRes = await fetch(
+              `https://api.github.com/users/${username}/starred?per_page=1`,
+            );
+            if (starRes.ok) {
+              const link = starRes.headers.get("Link");
+              if (link) {
+                const match = link.match(/&page=(\d+)>; rel="last"/);
+                starCount = match ? Number.parseInt(match[1], 10) : 1;
+              } else {
+                const stars = await starRes.json();
+                starCount = stars.length;
+              }
+            }
+          } catch (event) {
+            console.error(event);
+            return;
+          }
+        }
+
+        function formatNumber(num) {
+          if (
+            typeof num === "string" &&
+            (num.includes("+") || num.includes("-"))
+          )
+            return num;
+          if (num >= 1000000)
+            return `${(num / 1000000).toFixed(1).replace(/\.0$/, "")}m`;
+          if (num >= 1000)
+            return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+          return num.toString();
+        }
+
+        function updateBadge(id, count) {
+          const elem = document.getElementById(id);
+          if (!count || count === 0 || count === "0") {
+            elem.style.display = "none";
+          } else {
+            elem.style.display = "inline-block";
+            elem.textContent = formatNumber(count);
+          }
+        }
+
+        document.getElementById("page-title").textContent =
+          data.name || data.login;
+        document.getElementById("display-name").textContent =
+          data.name || data.login;
+        const usernameElem = document.getElementById("username");
+        if (data.name && data.name !== data.login) {
+          usernameElem.textContent = data.login;
+          usernameElem.style.display = "block";
+        } else {
+          usernameElem.style.display = "none";
+        }
+
+        document.getElementById("bio").textContent =
+          data.bio || "No bio available";
+        document.getElementById("location").textContent =
+          data.location || "Unknown";
+
+        const followers =
+          username.toLowerCase() === "saimaneim" ? "+999" : data.followers;
+        const following =
+          username.toLowerCase() === "saimaneim" ? "-1" : data.following;
+        document.getElementById("followers").textContent =
+          formatNumber(followers);
+        document.getElementById("following").textContent =
+          formatNumber(following);
+
+        const repos =
+          username.toLowerCase() === "saimaneim" ? "+999" : data.public_repos;
+        const stars =
+          username.toLowerCase() === "saimaneim" ? "+999" : starCount;
+        const projects =
+          username.toLowerCase() === "saimaneim" ? "+999" : projectCount;
+
+        updateBadge("repo-count", repos);
+        updateBadge("star-count", stars);
+        updateBadge("project-count", projects);
+
+        const githubLink = document.getElementById("github-link");
+        githubLink.href = data.blog || `https://github.com/${data.login}`;
+        githubLink.textContent = (data.blog || `github.com/${data.login}`)
+          .replace("https://", "")
+          .replace("http://", "");
+
+        const emailLink = document.getElementById("email-link");
+        if (data.email) {
+          emailLink.href = `mailto:${data.email}`;
+          emailLink.textContent = data.email;
+          emailLink.parentElement.style.display = "flex";
+        } else if (username.toLowerCase() === "saimaneim") {
+          emailLink.href = `mailto:${saimaneimData.email}`;
+          emailLink.textContent = "Available for remote";
+          emailLink.parentElement.style.display = "flex";
+        } else {
+          emailLink.parentElement.style.display = "none";
+        }
+
+        if (username.toLowerCase() === "saimaneim") {
+          document.getElementById("achievements").textContent =
+            saimaneimData.achievements;
+        } else {
+          document.getElementById("achievements").textContent =
+            "No achievement is insignificant, only constant progress.";
+        }
+
+        document
+          .getElementById("nav-avatar")
+          .setAttribute("username", data.login);
+        document
+          .getElementById("sidebar-avatar")
+          .setAttribute("username", data.login);
+        document
+          .getElementById("profile-content")
+          .setAttribute("username", data.login);
+      }
+
+      searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          updateUI(event.target.value.trim());
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "/" && document.activeElement !== searchInput) {
+          event.preventDefault();
+          searchInput.focus();
+        }
+      });
+    </script>
   </body>
 </html>
